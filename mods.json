@@ -1,0 +1,130 @@
+{
+  "version": "experimental",
+  "date": "",
+  "Tile_set": {
+    "name": "Undead++",
+    "url": "https://github.com/Theawesomeboophis/UndeadPeopleTileset/tree/master/TILESETS/gfx/MSX%2B%2BUnDeadPeopleEdition"
+  },
+  "Sound_pack": {
+    "name": "CC-Sounds",
+    "url": "https://github.com/Fris0uman/CDDA-Soundpacks"
+  },
+  "Mod_list": [
+    {
+      "name": "Undead tiles for mods",
+      "type": "mod_pack",
+      "url": "https://github.com/Theawesomeboophis/UndeadPeopleTileset/tree/master/TILESETS/data/mods"
+    },
+    {
+      "name": "Kenan Modpack",
+      "type": "mod_pack",
+      "url": "https://github.com/Kenan2000/CDDA-Structured-Kenan-Modpack/tree/master/Kenan-Structured-Modpack/High-Maintenance-Huge-Mods"
+    },
+
+    {
+      "name": "Expansion mod for Cataclysm",
+      "type": "mod",
+      "url": "https://github.com/Noctifer-de-Mortem/nocts_cata_mod/tree/master/nocts_cata_mod_DDA"
+    },
+    {
+      "name": "Furries)",
+      "type": "mod",
+      "url": "https://github.com/onura46/cdda-awakened-furries"
+    },
+    {
+      "name": "Forgotten Weapons",
+      "type": "mod",
+      "url": "https://github.com/ChainsawGarden/CDDA-Forgotten-Weapons-Mod"
+    },
+    {
+      "name": "Era Of Decay mod",
+      "type": "mod",
+      "url": "https://github.com/AtomicFox556/CDDA-EraOfDecayMod/tree/main/EraOfDecay"
+    },
+    {
+      "name": "Slime Rancher",
+      "type": "mod",
+      "url": "https://github.com/BohemianJones/cdda-slime-rancher/tree/main/slime_rancher"
+    },
+    {
+      "name": "Improved sidebar",
+      "type": "mod",
+      "url": "https://github.com/matshou/cdda-mods/tree/master/bc_sidebar"
+    },
+    {
+      "name": "The FOODCO bunker buddy",
+      "type": "mod",
+      "url": "https://github.com/TheJazziestCat/CDDA-FOODCO-expansion"
+    },
+    {
+      "name": "Mana Cores Mod",
+      "type": "mod",
+      "url": "https://github.com/Computer-Engineer-Man/cdda-mana-cores/tree/main/Mana-Cores"
+    },
+    {
+      "name": "Mining Mod",
+      "type": "mod",
+      "url": "https://github.com/DangerNoodle/mining-mod/tree/master/Mining_Mod"
+    },
+    {
+      "name": "More Survival Tools",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/MST_Extra_Mod/tree/master/MST_Extra"
+    },
+    {
+      "name": "Arcana",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/cdda-arcana-mod/tree/master/Arcana"
+    },
+    {
+      "name": "Arcana Magiclysm Patch",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/cdda-arcana-mod/tree/master/Patchmods/DDA_Arcana_Magiclysm_Patch"
+    },
+    {
+      "name": "Arcana Dinomod Patch",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/cdda-arcana-mod/tree/master/Patchmods/DDA_Arcana_Dinomod_Patch"
+    },
+    {
+      "name": "Medieval Mod Reborn",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/cdda_medieval_mod_reborn/tree/master/Medieval_Mod_Reborn"
+    },
+    {
+      "name": "Civilian Salvaged Robots",
+      "type": "mod",
+      "url": "https://github.com/Dueu/Salvaged_Robots_mod_compilation/tree/master/Salvaged%20Robots%20Mod-Compilation%20V%200.2/Civilian%20Salvaged%20Robots%20V.0.1"
+    },
+    {
+      "name": "Modular Turrets Remake",
+      "type": "mod",
+      "url": "https://github.com/Dueu/Salvaged_Robots_mod_compilation/tree/master/Salvaged%20Robots%20Mod-Compilation%20V%200.2/Modular%20Turrets%20Remake%20V%200.1.6"
+    },
+    {
+      "name": "Dorf Life",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/Dorf-Life-CDDA/tree/master/Dorf_Life"
+    },
+    {
+      "name": "Rebalance stamina regeneration",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/cdda-stamina-regen-buff/tree/master/stamina_regen_buff"
+    },
+    {
+      "name": "Tankmod",
+      "type": "mod",
+      "url": "https://github.com/chaosvolt/cdda-tankmod-revived-mod/tree/master/Tankmod_Revived"
+    },
+    {
+      "name": "More Survivor Stuff",
+      "type": "mod",
+      "url": "https://github.com/pawnishoovy/More-Survivor-Stuff/tree/master/More_Survivor_Stuff"
+    },
+    {
+      "name": "FoxMod Revitalized",
+      "type": "mod",
+      "url": "https://github.com/Mer1ck/FoxMod-Revitalized"
+    }
+  ]
+}
