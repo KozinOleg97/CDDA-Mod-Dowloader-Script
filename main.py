@@ -1,9 +1,9 @@
 import json
 import githubTool
 
-mods_folder = "mods/"
-sound_folder = "sound/"
-tiles_folder = "gfx/"
+mods_folder = "//mods"
+sound_folder = "//sound"
+tiles_folder = "//gfx"
 
 
 def read_json(json_path):
@@ -44,17 +44,21 @@ def get_mods(mod_list):
         if name is not None:
             match type:
                 case "mod_pack":
-                    githubTool.getRepo(gh_url=url, path_to_folder=mods_folder, is_mod_pack=True)
+                    # githubTool.getRepo(gh_url=url, path_to_folder=mods_folder, is_mod_pack=True)
+                    githubTool.get_repo_zip(gh_url=url, path_to_folder=mods_folder, is_mod_pack=True)
                 case "mod":
-                    githubTool.getRepo(gh_url=url, path_to_folder=mods_folder)
+                    # githubTool.getRepo(gh_url=url, path_to_folder=mods_folder)
+                    githubTool.get_repo_zip(gh_url=url, path_to_folder=mods_folder, is_mod_pack=False)
 
 
 def main():
     resources = read_json("mods.json")
-    # TODO добавить токен для увеличения лимита запросов к гиту или переделать скачивание
-    get_tile_set(resources["Tile_set"])
-    # get_sound_pack(resources["Sound_pack"])
+
     get_mods(resources["Mod_list"])
+
+    # get_tile_set(resources["Tile_set"])
+    # get_sound_pack(resources["Sound_pack"])
+    # get_mods(resources["Mod_list"])
 
 
 if __name__ == '__main__':

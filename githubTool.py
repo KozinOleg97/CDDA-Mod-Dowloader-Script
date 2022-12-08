@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8
 import io
+import pathlib
+import shutil
 import zipfile
 
 import requests
@@ -48,11 +50,56 @@ def get_release(gh_url, path_to_folder, release_name):
             download_link = asset["browser_download_url"]
 
     print(f"Downloading {repo} into {path_to_folder} ...")
-    file_name = download_zip(download_link, path_to_folder)
+    file_name = download_and_extract_zip(download_link, path_to_folder)
     print(f"Done downloading {file_name}.")
 
 
-def download_zip(url, save_path):
+def get_repo_zip(gh_url, path_to_folder, is_mod_pack=False):
+    # https://github.com/{owner}/{repo}/archive/refs/heads/master.zip
+    # TODO master/main ветки на гите
+    gh_url = "https://github.com/Noctifer-de-Mortem/nocts_cata_mod/tree/master/nocts_cata_mod_DDA"
+    gh_url = "https://github.com/onura46/cdda-awakened-furries"
+    gh_args, normal_url = parse_gh_url(gh_url)
+    owner = gh_args[0]
+    repo = gh_args[1]
+
+    req_folder = ""
+    if len(gh_args) < 3:
+        req_folder = repo + "-master" + "/"
+    else:
+        req_folder = repo + "-master" + "/".join(gh_args[3:]) + "/"
+
+    download_zip_and_extract_req_folder(
+        f"https://github.com/{owner}/{repo}/archive/refs/heads/master.zip", path_to_folder, req_folder)
+
+
+def download_zip_and_extract_req_folder(url, save_path, req_folder):
+    r = requests.get(url)
+
+    archive = zipfile.ZipFile(io.BytesIO(r.content))
+
+    if archive.namelist()[0].endswith("-main/"):
+        req_folder = req_folder.replace("-master/", "-main/", 1)
+
+    save_path = pathlib.Path(save_path)
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    for archive_item in archive.namelist():
+        if archive_item.startswith(req_folder):
+            # strip out the leading prefix then join to `out`, note that you
+            # may want to add some securing against path traversal if the zip
+            # file comes from an untrusted source
+            destpath = save_path.joinpath(archive_item[len(req_folder):])
+            # make sure destination directory exists otherwise `open` will fail
+
+            os.makedirs(destpath.parent, exist_ok=True)
+            with archive.open(archive_item) as source, open(destpath, 'wb') as dest:
+                shutil.copyfileobj(source, dest)
+
+    archive.close()
+
+
+def download_and_extract_zip(url, save_path):
     r = requests.get(url)
     z = zipfile.ZipFile(io.BytesIO(r.content))
     z.extractall(save_path)
