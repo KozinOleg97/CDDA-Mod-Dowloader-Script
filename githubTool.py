@@ -37,8 +37,6 @@ def mkdir_p(path):
 
 
 def get_release(gh_url, path_to_folder, release_name):
-
-
     gh_args, normal_url = parse_gh_url(gh_url)
     owner = gh_args[0]
     repo = gh_args[1]
@@ -219,3 +217,7 @@ def getRepo(gh_url, path_to_folder, is_mod_pack=False):
         print(f"Cloning {repo} into {path_to_folder + path} ...")
         clone(api_req_url, rel_url, path_to_folder + path, ref)
         print(f"Done cloning {repo}.")
+
+
+def remove_downloads(download_folder):
+    shutil.rmtree(download_folder)

@@ -69,6 +69,7 @@ def main():
     # get_sound_pack(resources["Sound_pack"])
     # get_mods(resources["Mod_list"])
 
+    githubTool.remove_downloads(download_folder)
 
 if __name__ == '__main__':
     main()
