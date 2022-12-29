@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8
+import fnmatch
 import io
 import pathlib
 import shutil
@@ -36,7 +37,7 @@ def mkdir_p(path):
 
 
 def get_release(gh_url, path_to_folder, release_name):
-    # https://api.github.com/repos/{owner}/{repo}/releases/latest
+
 
     gh_args, normal_url = parse_gh_url(gh_url)
     owner = gh_args[0]
@@ -54,23 +55,33 @@ def get_release(gh_url, path_to_folder, release_name):
     print(f"Done downloading {file_name}.")
 
 
-def get_repo_zip(gh_url, path_to_folder, is_mod_pack=False):
-    # https://github.com/{owner}/{repo}/archive/refs/heads/master.zip
-    # TODO master/main ветки на гите
-    gh_url = "https://github.com/Noctifer-de-Mortem/nocts_cata_mod/tree/master/nocts_cata_mod_DDA"
-    gh_url = "https://github.com/onura46/cdda-awakened-furries"
+def get_repo_and_unzip_needed(gh_url, path_to_folder, mod_name, is_mod_pack=False):
+    show_message(source=mod_name, message="Start downloading repo", lvl=1)
+
     gh_args, normal_url = parse_gh_url(gh_url)
     owner = gh_args[0]
     repo = gh_args[1]
 
     req_folder = ""
     if len(gh_args) < 3:
-        req_folder = repo + "-master" + "/"
+        req_folder = repo + "-master/"
     else:
-        req_folder = repo + "-master" + "/".join(gh_args[3:]) + "/"
+        req_folder = repo + "-master/" + "/".join(gh_args[3:]) + "/"
 
-    download_zip_and_extract_req_folder(
-        f"https://github.com/{owner}/{repo}/archive/refs/heads/master.zip", path_to_folder, req_folder)
+    req_folder = download_zip_and_extract_req_folder(
+        f"https://github.com/{owner}/{repo}/archive/refs/heads/master.zip", path_to_folder + "/" + mod_name, req_folder)
+
+    return path_to_folder + "/" + mod_name + "/" + req_folder
+
+
+def move_folder(source, destination, mod_name):
+    show_message(source=mod_name, message="Move to mod folder", lvl=1)
+    if pathlib.Path(destination + "/" + mod_name).exists():
+        show_message(source=mod_name, message="Remove old mod", lvl=2)
+        shutil.rmtree(destination)
+
+    shutil.move(source, destination + "/" + mod_name)
+    show_message(source=mod_name, message="Moved successfully", lvl=1)
 
 
 def download_zip_and_extract_req_folder(url, save_path, req_folder):
@@ -78,25 +89,29 @@ def download_zip_and_extract_req_folder(url, save_path, req_folder):
 
     archive = zipfile.ZipFile(io.BytesIO(r.content))
 
+    show_message(source="", message="Download complete", lvl=1)
+
     if archive.namelist()[0].endswith("-main/"):
         req_folder = req_folder.replace("-master/", "-main/", 1)
 
-    save_path = pathlib.Path(save_path)
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-    for archive_item in archive.namelist():
-        if archive_item.startswith(req_folder):
-            # strip out the leading prefix then join to `out`, note that you
-            # may want to add some securing against path traversal if the zip
-            # file comes from an untrusted source
-            destpath = save_path.joinpath(archive_item[len(req_folder):])
-            # make sure destination directory exists otherwise `open` will fail
+    show_message(source="", message="Unzip", lvl=1)
 
-            os.makedirs(destpath.parent, exist_ok=True)
-            with archive.open(archive_item) as source, open(destpath, 'wb') as dest:
-                shutil.copyfileobj(source, dest)
+    for file in archive.namelist():
+        if file.startswith(req_folder):
+            file.replace(req_folder, "")
+            archive.extract(file, save_path)
 
     archive.close()
+
+    show_message(source="", message="Unzip complete", lvl=1)
+    return req_folder
+
+
+def show_message(source, message, lvl):
+    if lvl == 0:
+        print("\t" * lvl + source + ": " + message)
+    else:
+        print("\t" * lvl + message + "!")
 
 
 def download_and_extract_zip(url, save_path):
@@ -165,6 +180,7 @@ def resolve_path(path, dir):
 
 def parse_gh_url(gh_url):
     # Normalize & parse input
+    gh_url = gh_url.replace('%20', " ")
     normal_gh_url = re.sub(BASE_NORMALIZE_REGEX, '', gh_url)
     gh_args = normal_gh_url.replace('/tree', '').split('/')
     return gh_args, normal_gh_url

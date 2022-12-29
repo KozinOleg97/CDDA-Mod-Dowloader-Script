@@ -1,9 +1,11 @@
 import json
 import githubTool
 
-mods_folder = "//mods"
-sound_folder = "//sound"
-tiles_folder = "//gfx"
+download_folder = "temp_download"
+
+mods_folder = "mods"
+sound_folder = "sound"
+tiles_folder = "gfx"
 
 
 def read_json(json_path):
@@ -20,9 +22,9 @@ def get_tile_set(data):
     if name is not None:
         match name:
             case "Undead++":
-                githubTool.getRepo(gh_url=url, path_to_folder=tiles_folder)
+                githubTool.getRepo(gh_url=url, path_to_folder=download_folder)
             case _:
-                githubTool.getRepo(gh_url=url, path_to_folder=tiles_folder)
+                githubTool.getRepo(gh_url=url, path_to_folder=download_folder)
 
 
 def get_sound_pack(data):
@@ -44,11 +46,18 @@ def get_mods(mod_list):
         if name is not None:
             match type:
                 case "mod_pack":
+                    pass
                     # githubTool.getRepo(gh_url=url, path_to_folder=mods_folder, is_mod_pack=True)
-                    githubTool.get_repo_zip(gh_url=url, path_to_folder=mods_folder, is_mod_pack=True)
+                    # githubTool.get_repo_and_unzip_needed(gh_url=url, path_to_folder=download_folder, mod_name=name,                                                         is_mod_pack=True)
                 case "mod":
-                    # githubTool.getRepo(gh_url=url, path_to_folder=mods_folder)
-                    githubTool.get_repo_zip(gh_url=url, path_to_folder=mods_folder, is_mod_pack=False)
+
+                    githubTool.show_message(source=name, message="Start fetching", lvl=0)
+                    files_path = githubTool.get_repo_and_unzip_needed(gh_url=url, path_to_folder=download_folder,
+                                                                      mod_name=name,
+                                                                      is_mod_pack=False)
+
+                    githubTool.move_folder(source=files_path, destination=mods_folder, mod_name=name)
+                    githubTool.show_message(source=name, message="Done successfully"+"\n", lvl=0)
 
 
 def main():
